@@ -18,7 +18,7 @@ def main(args):
     out_df = out_df.assign(**{"TAREFA/OBSERVAÇÃO": in_df["nm_tarefa"]})
     out_df = out_df.assign(**{"CLASSE JUDICIAL": in_df["ds_classe_judicial"]})
     out_df = out_df.assign(**{"CÓDIGO CLASSE": in_df["cd_classe_judicial"]})
-    map_df = pd.read_excel("Divisão-Servidores.xlsx")
+    map_df = pd.read_excel(args.servidores)
     schema = lambda: {
         "PROCESSO": list(),
         "ZONA ELEITORAL": list(),
@@ -33,7 +33,6 @@ def main(args):
         zonas = map_df.loc[map_df["Servidor"] == servidor, "ZE"]
         servidores[servidor] = out_df.loc[out_df["ZONA ELEITORAL"].isin(zonas)]
     assert len(pd.merge(servidores["Karol"], servidores["Rafael"], how="inner", on=['ZONA ELEITORAL'])) == 0
-    counts = [len(servidores[servidor]) for servidor in servidores]
 
     with pd.ExcelWriter(args.output) as writer:
         for sheet_name, df in servidores.items():
@@ -43,6 +42,7 @@ def main(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Process some integers.")
     parser.add_argument("--input", type=str, help="Input file path", default="liods-controle-processual-do-1o-grau.csv")
+    parser.add_argument("--servidores", type=str, help="Input file path", default="Divisão-Servidores.xlsx")
     parser.add_argument("--output", type=str, help="Output file path", default="output.xlsx")
     args = parser.parse_args()
 
