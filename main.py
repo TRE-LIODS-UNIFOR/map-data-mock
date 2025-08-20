@@ -18,7 +18,7 @@ def main(args):
     out_df = out_df.assign(**{"TAREFA/OBSERVAÇÃO": in_df["nm_tarefa"]})
     out_df = out_df.assign(**{"CLASSE JUDICIAL": in_df["ds_classe_judicial"]})
     out_df = out_df.assign(**{"CÓDIGO CLASSE": in_df["cd_classe_judicial"]})
-    map_df = pd.read_excel("Divisão Servidores - Zonas CONTAS.xlsx")
+    map_df = pd.read_excel("Divisão-Servidores.xlsx")
     schema = lambda: {
         "PROCESSO": list(),
         "ZONA ELEITORAL": list(),
