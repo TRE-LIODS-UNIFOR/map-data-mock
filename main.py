@@ -11,7 +11,6 @@ def main(args):
         "CLASSE JUDICIAL": [],
         "TAREFA/OBSERVAÇÃO": [],
     })
-    servidor_map = pd.read_excel("Divisão Servidores - Zonas CONTAS.xlsx")
     out_df = out_df.assign(PROCESSO=in_df["nr_processo"])
     in_df["ds_orgao_julgador"].dropna().transform(lambda x: int(x[:3]))
     zonas = in_df["ds_orgao_julgador"].dropna().transform(lambda x: int(x[:3]))
