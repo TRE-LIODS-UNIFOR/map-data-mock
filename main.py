@@ -32,6 +32,8 @@ def main(args):
     for servidor in servidores:
         zonas = map_df.loc[map_df["Servidor"] == servidor, "ZE"]
         servidores[servidor] = out_df.loc[out_df["ZONA ELEITORAL"].isin(zonas)]
+        servidores[servidor]["ZONA ELEITORAL"] = in_df["ds_orgao_julgador"]
+
     assert len(pd.merge(servidores["Karol"], servidores["Rafael"], how="inner", on=['ZONA ELEITORAL'])) == 0
 
     with pd.ExcelWriter(args.output) as writer:
